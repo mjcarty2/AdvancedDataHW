@@ -1,7 +1,7 @@
 # dependencies
-from flask import Flask, jsonify
-
-import datetime as dt
+from datetime import datetime
+import numpy as np
+import pandas as pd
 
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
@@ -10,18 +10,17 @@ from sqlalchemy import create_engine, func
 
 from flask import Flask, jsonify
 
-from datetime import datetime
-
 # Database Set up
-engine = create_engine('sqlite:///Resources/hawaii.sqlite', connect_args={'check_same_thread': False})
+engine = create_engine('sqlite:///hawaii.sqlite')
 
 Base = automap_base()
 Base.prepare(engine, reflect=True)
 
-# Save tables as variables
-Measurement = Base.classes.measurements
-Station = Base.classes.stations
+# Set up bases
+Measurement = Base.classes.measurement
+Station = Base.classes.station
 
+# Start session
 session = Session(engine)
 
 # Set up Flask
